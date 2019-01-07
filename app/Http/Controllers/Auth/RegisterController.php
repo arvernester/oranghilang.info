@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\Mail\Auth\RegisteredMail;
+use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -19,7 +24,7 @@ class RegisterController extends Controller
     | validation and creation. By default this controller uses a trait to
     | provide this functionality without requiring any additional code.
     |
-    */
+     */
 
     use RegistersUsers;
 
@@ -63,10 +68,33 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        DB::transaction(function () use (&$user, $data) {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone' => $data['phone'] ?? null,
+                'address' => $data['address'] ?? '',
+                'metadata' => [],
+                'password' => Hash::make($data['password']),
+            ]);
+
+            $role = Role::firstOrCreate(['name' => 'User']);
+
+            $user->assignRole($role);
+        });
+
+        return $user;
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param Request $request
+     * @param User $user
+     * @return void
+     */
+    protected function registered(Request $request, User $user)
+    {
+        
     }
 }

@@ -20,8 +20,12 @@
             <a class="google" href="#"><i class="lni-google-plus"></i></a>
           </div>
           <div class="header-top-right float-right">
+            @guest
             <a href="{{ route('login', ['source' => 'navbar']) }}" class="header-top-button"><i class="lni-lock"></i> @lang('Log In')</a> |
             <a href="{{ route('register', ['source' => 'navbar']) }}" class="header-top-button"><i class="lni-user"></i> @lang('Register')</a>
+            @else
+            <a href="{{ route('logout', ['source' => 'navbar']) }}" class="header-top-button"><i class="lni-unlock"></i> @lang('Logout')</a>
+            @endguest
           </div>
         </div>
       </div>

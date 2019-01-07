@@ -13,7 +13,8 @@
 
 Route::get('/', 'IndexController')->name('index');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
+Route::match(['get', 'post'], 'logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/person', 'PersonController');

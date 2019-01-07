@@ -8,11 +8,11 @@
         <div class="sidebar-box">
           <div class="user">
             <figure>
-              <a href="#"><img src="assets/img/author/img1.jpg" alt=""></a>
+              <a href="#"><img src="{{ auth()->user()->gravatar }}" alt="{{ auth()->user()->name }}"></a>
             </figure>
             <div class="usercontent">
-              <h3>Hello William!</h3>
-              <h4>Administrator</h4>
+              <h3>@lang('Hello :name', ['name' => auth()->user()->name])</h3>
+              <h4>@lang(auth()->user()->roles->first()->name)</h4>
             </div>
           </div>
           <nav class="navdashboard">
@@ -60,18 +60,20 @@
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="{{ route('logout', ['source' => 'dashboard']) }}">
                   <i class="lni-enter"></i>
-                  <span>Logout</span>
+                  <span>@lang('Logout')</span>
                 </a>
               </li>
             </ul>
           </nav>
         </div>
         <div class="widget">
-          <h4 class="widget-title">Advertisement</h4>
+          <h4 class="widget-title">@lang('Advertisement')</h4>
           <div class="add-box">
-            <img class="img-fluid" src="assets/img/img1.jpg" alt="">
+            <div class="text-center">
+                <img src="https://lh6.ggpht.com/iR8AoaX4JzGa8XVUFS1rwIfxV9eMrvPOGgEg5RXyJVLWtYcu9j1rm1qojmATUZbW7zU5PbM=w200" alt="">
+            </div>
           </div>
         </div>
       </aside>

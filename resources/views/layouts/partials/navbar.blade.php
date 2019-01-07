@@ -32,6 +32,15 @@
             @lang('Contact')
           </a>
         </li>
+
+        @auth
+        <li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('home', ['source' => 'navbar']) }}">
+            @lang('Dashboard')
+          </a>
+        </li>
+        @endauth
+
       </ul>
       <div class="post-btn">
         <a class="btn btn-common" href="{{ route('person.create', ['source' => 'navbar']) }}"><i class="lni-pencil-alt"></i> @lang('Post Missing Person')</a>
@@ -53,6 +62,12 @@
     <li>
       <a class="{{ request()->routeIs('contact.form') ? 'active' : '' }}" href="{{ route('contact.form') }}">@lang('Contact')</a>
     </li>
+
+    @auth
+    <li>
+      <a class="{{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">@lang('Dashboard')</a>
+    </li>
+    @endauth
   </ul>
   <!-- Mobile Menu End -->
 

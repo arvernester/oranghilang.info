@@ -12,11 +12,15 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable;
     use Sluggable;
+    use HasRoles;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -53,6 +57,10 @@ class User extends Authenticatable
         'deleted_at',
     ];
 
+    protected $appends = [
+        'gravatar',
+    ];
+
     public function getRouteKeyName(): string
     {
         return 'username';
@@ -68,6 +76,16 @@ class User extends Authenticatable
         return [
             'username' => ['source' => 'name'],
         ];
+    }
+
+    /**
+     * Get gravatar image based on registered email address.
+     *
+     * @return string
+     */
+    public function getGravatarAttribute(): string
+    {
+        return 'https://www.gravatar.com/avatar/' . md5($this->attributes['email']) . '?s=100';
     }
 
     /**
