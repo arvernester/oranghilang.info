@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\User;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class City extends Model
 {
+    use Sluggable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -24,9 +27,21 @@ class City extends Model
         'province_id' => 'integer',
     ];
 
-    public function getRouteKey(): string
+    public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => ['source' => 'name'],
+        ];
     }
 
     /**

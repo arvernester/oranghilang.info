@@ -5,6 +5,7 @@ namespace App;
 use App\Models\City;
 use App\Models\Medium;
 use App\Models\Person;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -15,6 +16,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable, SoftDeletes;
+    use Sluggable;
 
     /**
      * The attributes that are mass assignable.
@@ -43,12 +45,30 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     protected $dates = [
         'deleted_at',
     ];
+
+    public function getRouteKeyName(): string
+    {
+        return 'username';
+    }
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'username' => ['source' => 'name'],
+        ];
+    }
 
     /**
      * User belongs to City.
