@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@push('opengraph')
+<meta property="og:title" content="{{ $person->namme }}" />
+<meta property="og:url" content="{{ url()->current() }}" />
+@endpush
+
 @section('content')
 <div class="container">
   <!-- Product Info Start -->
@@ -11,7 +16,7 @@
             <div class="product-img">
               <img class="img-fluid" src="{{ asset('img/productinfo/img1.jpg') }}" alt="">
             </div>
-            <span class="price">$1,550</span>
+            <span class="price">@lang('Still missing')</span>
           </div>
           <div class="item">
             <div class="product-img">
@@ -30,28 +35,11 @@
 
       <div class="details-box">
         <div class="ads-details-info">
-          <h2>Apple MF839LL/A MacBook Pro 13.3-Inch Laptop</h2>
-          <div class="details-meta">
-            <span><a href="#"><i class="lni-alarm-clock"></i> 7 Jan, 10:10 pm</a></span>
-            <span><a href="#"><i class="lni-map-marker"></i>  New York</a></span>
-            <span><a href="#"><i class="lni-eye"></i> 299 View</a></span>
+          <h2>{{ $person->name }}</h2>
+          
+          <div class="description">
+            {{ $person->description }}
           </div>
-          <p class="mb-4">Up for sale we have a vintage Raleigh Sport Men’s Bicycle. This bike does have some general wear and surface corrosion on some of the parts but is overall in good shape. It has been checked out and does work. Brakes and gears work. Seat is fully intact. Frame and fenders are in nice shape with minimal wear. A few minor dents in the fenders but most of the paint is intact. This vintage bicycle is very well preserved and can be used the way it is or fully restored if you would like it to look newer.</p>
-      
-          <h4 class="title-small mb-3">Specification:</h4>
-          <ul class="list-specification">
-            <li><i class="lni-check-mark-circle"></i> 256GB PCIe flash storage</li>
-            <li><i class="lni-check-mark-circle"></i> 2.7 GHz dual-core Intel Core i5</li>
-            <li><i class="lni-check-mark-circle"></i> Turbo Boost up to 3.1GHz</li>
-            <li><i class="lni-check-mark-circle"></i> Intel Iris Graphics 6100</li>
-            <li><i class="lni-check-mark-circle"></i> 8GB memory</li>
-            <li><i class="lni-check-mark-circle"></i> 10 hour battery life</li>
-            <li><i class="lni-check-mark-circle"></i> 13.3" Retina Display</li>
-            <li><i class="lni-check-mark-circle"></i> 1 Year international warranty</li>
-          </ul>
-          <p class="mb-4">
-            Up for sale we have a vintage Raleigh Sport Men’s Bicycle. This bike does have some general wear and surface corrosion on some of the parts but is overall in good shape. It has been checked out and does work. Brakes and gears work. Seat is fully intact. Frame and fenders are in nice shape with minimal wear. A few minor dents in the fenders but most of the paint is intact. 
-          </p>
         </div>
         <div class="tag-bottom">
           <div class="float-left">
@@ -91,8 +79,8 @@
                 <a href="#"><img src="{{ asset('img/productinfo/agent.jpg') }}" alt=""></a>
               </div>
               <div class="agent-details">
-                <h3><a href="#">Tahmina Anny</a></h3>
-                <span><i class="lni-phone-handset"></i>(123) 123-456</span>
+                <h3><a href="#">{{ $person->contact_name }}</a></h3>
+                <span><i class="lni-phone-handset"></i>{{ $person->contact_phone }}</span>
               </div>
             </div>
             <input type="text" class="form-control" placeholder="Your Email">

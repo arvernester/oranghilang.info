@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\User;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Person extends Model
 {
     use SoftDeletes;
+    use Sluggable;
 
     /**
      * The attributes that are mass assignable.
@@ -39,6 +41,18 @@ class Person extends Model
     protected $dates = [
         'deleted_at',
     ];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => ['source' => 'name'],
+        ];
+    }
 
     /**
      * Person belongs to User.

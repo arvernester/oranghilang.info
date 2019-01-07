@@ -18,9 +18,9 @@
           <nav class="navdashboard">
             <ul>
               <li>
-                <a class="active" href="dashboard.html">
+                <a class="active" href="{{ route('home') }}">
                   <i class="lni-dashboard"></i>
-                  <span>Dashboard</span>
+                  <span>@lang('Dashboard')</span>
                 </a>
               </li>
               <li>
@@ -83,7 +83,7 @@
       <div class="page-content">
         <div class="inner-box">
           <div class="dashboard-box">
-            <h2 class="dashbord-title">Dashboard</h2>
+            <h2 class="dashbord-title">@lang('Dashboard')</h2>
           </div>
           <div class="dashboard-wrapper">
             <div class="dashboard-sections">

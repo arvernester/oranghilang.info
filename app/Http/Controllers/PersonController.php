@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -41,11 +42,13 @@ class PersonController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Person $person
+     * @return View
      */
-    public function show($id): View
+    public function show(Person $person): View
     {
+        $person->load('city', 'user');
+
         return view('person.show', compact('person'));
     }
 
